@@ -1,5 +1,10 @@
 package phungleson.topcoder.srm591;
 
+/**
+ * http://community.topcoder.com/stat?c=problem_statement&pm=12746
+ * 
+ * @author son
+ */
 public class TheTree {
 	public int maximumDiameter(int[] counts) {
 		if (counts == null || counts.length == 0) {
