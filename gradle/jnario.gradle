@@ -1,0 +1,56 @@
+apply plugin: 'java'
+
+def xtendSrcDir = file('src/test/java')
+
+def xtendGenTargetDir = file('src/test/xtend-gen')
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testCompile 'org.jnario:org.jnario.standalone.maven:0.6.0'
+}
+
+sourceSets {
+  test {
+    java {
+      srcDir xtendGenTargetDir
+    }
+  }
+}
+
+import org.apache.log4j.BasicConfigurator
+import org.eclipse.xtend.core.XtendStandaloneSetup
+import org.eclipse.xtend.core.compiler.batch.XtendBatchCompiler
+task compileXtend {
+  inputs.dir xtendSrcDir
+  outputs.dir xtendGenTargetDir
+
+  doLast {
+    def srcPath = xtendSrcDir.absolutePath
+    def targetPath = xtendGenTargetDir.absolutePath
+    def classpath = configurations.compile.asPath
+
+    BasicConfigurator.configure()
+    XtendBatchCompiler compiler = new XtendStandaloneSetup().createInjectorAndDoEMFRegistration().getInstance(XtendBatchCompiler.class)
+    compiler.setOutputPath(targetPath)
+    compiler.setClassPath(classpath)
+    compiler.setSourcePath(srcPath)
+    if (!compiler.compile()) {
+      throw new GradleException("Xtend compilation failed.");
+    }
+  }
+}
+
+tasks.compileJava.dependsOn compileXtend
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'org.jnario:org.jnario.standalone.maven:0.6.0'
+  }
+}

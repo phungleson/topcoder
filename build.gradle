@@ -1,0 +1,9 @@
+apply from: 'gradle/jnario.gradle'
+
+apply plugin: 'java'
+
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+}
