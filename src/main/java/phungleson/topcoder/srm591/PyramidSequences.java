@@ -49,16 +49,16 @@ public class PyramidSequences {
 
 			boolean exists = false;
 
-			// for (Pair pair : pairs) {
-			// if (pair.n == nValue && pair.m == mValue) {
-			// exists = true;
-			// break;
-			// }
-			// }
+			for (Pair pair : pairs) {
+				if (pair.n == nValue && pair.m == mValue) {
+					exists = true;
+					break;
+				}
+			}
 
-			// if (!exists) {
-			// pairs.add(new Pair(nValue, mValue));
-			// }
+			if (!exists) {
+				pairs.add(new Pair(nValue, mValue));
+			}
 
 			if ((nValue == nMax && mValue == 1) ||
 				(nValue == 1 && mValue == mMax) ||
